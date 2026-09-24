@@ -1,7 +1,7 @@
 window.PORTFOLIO_DATA = {
-  "fname": "Khaled",
+  "fname": "Khaled Mosharraf",
   "lname": "",
-  "title": "CSE student focused on cybersecurity and networking",
+  "title": "Khaled's portfolio",
   "status": "Open to collaboration",
   "loc": "Dhaka, Bangladesh",
   "school": "Daffodil International University",
