@@ -105,7 +105,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Extension",
-      "status": "New"
+      "status": "New",
+      "details": "Tickets on the Bangladesh Railway e-ticket site can sell out within a minute of release. Seat Hold waits for the release time, then holds the seats you asked for on your route.\n\nIt is a separate extension from Ticket Finder. Its panel sits on the left side of the page while Ticket Finder's sits on the right.",
+      "features": "Holds seats at the release time, 8:00:00 by default and editable\nPrefers side-by-side seats and falls back to any seats\nDraggable panel that remembers if it was open or closed\nDate picker in dd/mm/yyyy, and a sound alert with a stop button\nWatch mode: holds a seat on your route if someone else releases it, within a time limit you set\nHandles both broad gauge and meter gauge seat plans",
+      "photos": []
     },
     {
       "title": "Trip Expense Tracker",
@@ -116,7 +119,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "https://github.com/protwoy007/trip_expense",
       "cat": "Web",
-      "status": "New"
+      "status": "New",
+      "details": "Built to keep track of spending on a group trip. Admins can edit everything, while the rest of the team can open the page and follow the spending.\n\nIt is hosted on GitHub Pages, with Firebase behind it, and the Firebase key is kept out of the public repository.",
+      "features": "Each expense stores a name, amount, date added, track date, place and notes\nGit-style change history: every edit is logged with the time it happened\nPer-person contribution tracking\nAdmin login for editing, view-only for the team\nDark blue, black and lime colour palette",
+      "photos": []
     },
     {
       "title": "DengueShield BD",
@@ -127,7 +133,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Mobile",
-      "status": "New"
+      "status": "New",
+      "details": "An early-warning app for dengue in Bangladesh, built with Flutter. It started as a prototype and has been through a full usability upgrade and several feature releases.\n\nCase reports are stored on the phone only, which keeps the prototype simple.",
+      "features": "Dark mode\nReport a case, stored on the phone\nDengue facts and myths screen\n14-day trend history\nDaily morning risk notification",
+      "photos": []
     },
     {
       "title": "Tender Package Builder",
@@ -138,7 +147,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": "Updated"
+      "status": "Updated",
+      "details": "Built for the frontend-only problem of the AI DevFest 2026 Vibe Coding contest, a 90-minute build held on 6 October 2026. Tender documents arrive as separate PDFs and have to be put together into one correct package.\n\nIt is being upgraded after the contest with a better interface, more languages and a proper README.",
+      "features": "Combines separate PDFs into one checked, ordered package\nWorks in Bangla and English\nRuns entirely in the browser, with no server",
+      "photos": []
     },
     {
       "title": "Messenger Auto-Reply",
@@ -149,7 +161,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Extension",
-      "status": "In progress"
+      "status": "In progress",
+      "details": "A browser extension that replies to Facebook messages by rules instead of AI. If a message says a set phrase, or something close to it, the matching reply is sent.\n\nThe settings dashboard is being redesigned so that anyone can set it up without thinking about it.",
+      "features": "Add rules by hand: if they say X, reply Y\nUniversal replies and person-specific replies\nSeparate group replies for your name being mentioned and for @everyone\nDashboard notifications for important messages\nFirst-run setup wizard with ready-made reply templates",
+      "photos": []
     },
     {
       "title": "Reel Maker AI",
@@ -160,7 +175,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": "In progress"
+      "status": "In progress",
+      "details": "A web app for making short reels that are cut to the beat of a song. The first local version is a full MVP, with a multi-track timeline, music and export presets.\n\nThe longer plan adds automatic beat detection and presets that users create themselves.",
+      "features": "Multi-track timeline\nMusic track support\nExport presets\nPlanned: automatic beat and tempo detection\nPlanned: custom presets made by the user",
+      "photos": []
     },
     {
       "title": "Blockchain public fund tracking",
@@ -171,7 +189,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Research",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Clap switch circuit",
@@ -182,7 +203,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Hardware",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Phone book management system",
@@ -193,7 +217,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Programming",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Vibe Mather",
@@ -204,7 +231,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "My People Network",
@@ -215,7 +245,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Budget Splitter",
@@ -226,7 +259,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Programming",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "FndChat",
@@ -237,7 +273,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "AI social media agent",
@@ -248,7 +287,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "AI",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Safe-Send recipient risk check",
@@ -259,7 +301,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "https://github.com/protwoy007/safe-send",
       "cat": "AI",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Particle system",
@@ -270,7 +315,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Figma-to-HTML workflow",
@@ -281,7 +329,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "img23d",
@@ -292,7 +343,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "https://github.com/protwoy007/3d_model",
       "cat": "Web",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "Ticket Finder",
@@ -303,7 +357,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "https://github.com/protwoy007/ticket_finder",
       "cat": "Extension",
-      "status": "Updated"
+      "status": "Updated",
+      "details": "Ticket Finder scans every train between two stations on the Bangladesh Railway e-ticket site and works out split-ticket routes from each train's real stops, so a sold-out journey can sometimes be covered by two shorter tickets.\n\nRequests are spaced about 1.5 seconds apart so the server does not treat the scan as a bot.",
+      "features": "Scans every train between two stations\nSplit-ticket routes built only from each train's real stops\nFull seat matrix shown as a heatmap\nLive train timings\nFloating on-page dashboard panel",
+      "photos": []
     },
     {
       "title": "YouTube Downloader extension",
@@ -314,7 +371,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "https://github.com/protwoy007/youtube_downloader",
       "cat": "Extension",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "MyPeople for Android",
@@ -325,7 +385,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Mobile",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     },
     {
       "title": "AR object scanning game",
@@ -336,7 +399,10 @@ window.PORTFOLIO_DATA = {
       "live": "",
       "code": "",
       "cat": "Web",
-      "status": ""
+      "status": "",
+      "details": "",
+      "features": "",
+      "photos": []
     }
   ],
   "resources": "https://drive.google.com/drive/folders/1f5cdXU84TpTs1kwcjRJTR0mNA_CRuoTL?usp=drive_link"

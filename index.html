@@ -207,6 +207,40 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .res-link{color:var(--ice);text-underline-offset:3px;font-family:var(--font-mono)}
 .proj-empty{padding:40px 0;color:var(--muted);font-family:var(--font-mono)}
 .proj-edit input,.proj-edit select,.proj-edit textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--text);font:.88rem var(--font-sans)}
+body.in-detail main>section:not(#detail){display:none}
+.proj-visual a{display:block;height:100%}
+.proj-visual>a>img{width:100%;height:100%;object-fit:cover;display:block}
+.tlink{text-decoration:none}
+.tlink:hover{text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:4px}
+#detail{padding-top:120px}
+.crumb{font:500 .85rem var(--font-mono);color:var(--ice);text-decoration:none;text-underline-offset:3px}
+.crumb:hover{text-decoration:underline}
+.d-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.d-head h1{font:600 clamp(2rem,4.5vw,3rem)/1.1 var(--font-mono);letter-spacing:-.03em;margin:18px 0 10px;overflow-wrap:anywhere}
+.d-head .badge{margin-left:0;margin-right:10px}
+.d-lead{color:var(--muted);max-width:62ch}
+.d-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px;margin-top:34px;align-items:start}
+.gal>img{width:100%;border:1px solid var(--line);border-radius:8px;display:block;background:var(--surface)}
+.thumbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.thumb{width:72px;height:54px;padding:0;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface);cursor:pointer;opacity:.6}
+.thumb[aria-pressed="true"]{opacity:1;border-color:var(--amber)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.d-text p{max-width:60ch;margin-bottom:16px}
+.d-text h2{font:600 .8rem var(--font-mono);color:var(--muted);margin:28px 0 12px;text-transform:uppercase;letter-spacing:.06em}
+.feat{display:grid;gap:8px}
+.feat li{position:relative;padding-left:20px}
+.feat li::before{content:'>';position:absolute;left:0;color:var(--amber);font-family:var(--font-mono)}
+.d-nav{display:flex;justify-content:space-between;gap:16px;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.d-nav a{color:var(--ice);font:500 .88rem var(--font-mono);text-underline-offset:3px}
+.photo-edit{border:1px dashed var(--line);border-radius:6px;padding:10px}
+.photo-edit .pl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.photo-edit .pi{position:relative;width:84px}
+.photo-edit .pi img{width:84px;height:60px;object-fit:cover;border-radius:4px;border:1px solid var(--line);display:block}
+.photo-edit .pi button{width:100%;margin-top:3px;font-size:.7rem;padding:2px}
+.photo-edit .pu{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.photo-edit .pu input[type=text]{flex:1;min-width:140px}
+@media (max-width:860px){.d-grid{grid-template-columns:minmax(0,1fr);gap:28px}}
+@media (max-width:640px){#detail{padding-top:160px}}
 @media (max-width:860px){
   .hero-grid,.about-grid,.contact-grid,.proj{grid-template-columns:minmax(0,1fr);gap:40px}
   .proj:nth-child(even) .proj-visual{order:0}
@@ -320,6 +354,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
       </form>
     </div>
   </section>
+  <section class="block" id="detail" hidden><div class="wrap" id="detail-in"></div></section>
 </main>
 
 <footer>
@@ -359,7 +394,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         <button class="chat-close" type="button" aria-label="Close admin panel" onclick="closeAdmin()">&times;</button>
       </div>
       <div class="modal-body">
-        <p class="note">Edits you save here are a preview in this browser only. To publish them, choose Download data.js and replace the data.js file in your GitHub repository with it. The password only locks this panel in your own browser and does not protect the site.</p>
+        <p class="note">Edits you save here are a preview in this browser only. To publish them, choose Download data.js and replace the data.js file in your GitHub repository with it. The password only locks this panel in your own browser and does not protect the site. Photos you upload are embedded in data.js and make it large. For a lighter site, put the images in an images folder in your repo and add paths like images/seat-hold.jpg instead.</p>
         <div class="admin-sec"><h3>General</h3><div class="admin-grid" id="admin-general"></div></div>
         <div class="admin-sec"><h3>Skills</h3><div id="admin-skills"></div><button class="mini-btn" type="button" onclick="addSkill()">Add skill</button></div>
         <div class="admin-sec"><h3>Projects</h3><div id="admin-projects"></div><button class="mini-btn" type="button" onclick="addProject()">Add project</button></div>
@@ -401,7 +436,7 @@ function loadData(){
   }catch(e){}
   return base;
 }
-function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify({sig:BASE_SIG,data:data}))}catch(e){}}
+function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify({sig:BASE_SIG,data:data}));return true}catch(e){return false}}
 let data=loadData();
 let draft=null;
 
@@ -570,21 +605,67 @@ function renderChips(){
 }
 function initChips(){
   $('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;filter=b.dataset.cat;renderProjects()});
+  $('detail').addEventListener('click',e=>{const b=e.target.closest('.thumb');if(!b)return;const j=+b.dataset.j;const m=$('gal-main');if(m&&detailPhotos[j])m.src=detailPhotos[j];$('detail').querySelectorAll('.thumb').forEach(t=>t.setAttribute('aria-pressed',String(t===b)))});
 }
 function renderStats(){
   const gh=data.projects.filter(p=>p.code).length;
   const wip=data.projects.filter(p=>/progress/i.test(p.status||'')).length;
   $('stats').innerHTML=[[data.projects.length,'projects'],[gh,'on GitHub'],[data.skills.length,'skills'],[wip,'in progress']].map(([n,l])=>`<li><b>${n}</b>${l}</li>`).join('');
 }
+let inDetail=false,detailIdx=-1,detailPhotos=[];
+const isAdminSession=()=>{try{return sessionStorage.getItem('portfolio-admin')==='1'}catch(e){return false}};
+const photosOf=p=>(p.photos||[]).filter(Boolean);
 function renderProjects(){
   renderChips();
   const list=data.projects.filter(p=>filter==='All'||p.cat===filter);
   $('projects-list').innerHTML=list.length?list.map(p=>{
     const tags=tagList(p.tags).map(t=>`<li class="tag">${esc(t)}</li>`).join('');
+    const url='#project/'+slug(p.title);
     const links=[[p.live,'Live demo'],[p.code,'Source code']].filter(l=>l[0]&&l[0]!=='#').map(l=>`<a class="plink" href="${esc(href(l[0]))}" target="_blank" rel="noopener">${l[1]}</a>`).join('');
     const badge=p.status?`<span class="badge${/progress/i.test(p.status)?' wip':''}">${esc(p.status)}</span>`:'';
-    return `<article class="proj"><div class="proj-visual">${visual(p)}</div><div class="proj-text"><h3>${esc(p.title)}${badge}</h3><p>${esc(p.desc)}</p><ul class="tags">${tags}</ul>${links?`<div class="plinks">${links}</div>`:''}</div></article>`;
+    const cover=photosOf(p)[0];
+    const media=cover?`<img src="${esc(cover)}" alt="${esc(p.title)}" loading="lazy"/>`:visual(p);
+    return `<article class="proj"><div class="proj-visual"><a href="${esc(url)}" aria-label="Open ${esc(p.title)}">${media}</a></div><div class="proj-text"><h3><a class="tlink" href="${esc(url)}">${esc(p.title)}</a>${badge}</h3><p>${esc(p.desc)}</p><ul class="tags">${tags}</ul><div class="plinks"><a class="plink" href="${esc(url)}">Details &rarr;</a>${links}</div></div></article>`;
   }).join(''):'<p class="proj-empty">No projects in this category yet.</p>';
+}
+function renderDetail(i){
+  const p=data.projects[i],n=data.projects.length;
+  const ph=photosOf(p);detailPhotos=ph;
+  const tags=tagList(p.tags).map(t=>`<li class="tag">${esc(t)}</li>`).join('');
+  const links=[[p.live,'Live demo'],[p.code,'Source code']].filter(l=>l[0]&&l[0]!=='#').map(l=>`<a class="btn ${l[1]==='Live demo'?'btn-solid':'btn-ghost'}" href="${esc(href(l[0]))}" target="_blank" rel="noopener">${l[1]}</a>`).join('');
+  const paras=String(p.details||'').split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean).map(x=>`<p>${esc(x)}</p>`).join('');
+  const feats=String(p.features||'').split('\n').map(x=>x.trim()).filter(Boolean);
+  const badge=p.status?`<span class="badge${/progress/i.test(p.status)?' wip':''}">${esc(p.status)}</span>`:'';
+  const media=ph.length?`<div class="gal"><img id="gal-main" src="${esc(ph[0])}" alt="${esc(p.title)}"/>${ph.length>1?`<div class="thumbs">${ph.map((u,j)=>`<button type="button" class="thumb" data-j="${j}" aria-label="Photo ${j+1}" aria-pressed="${j===0}"><img src="${esc(u)}" alt=""/></button>`).join('')}</div>`:''}</div>`:`<div class="proj-visual">${visual(p)}</div>`;
+  const prev=data.projects[(i-1+n)%n],next=data.projects[(i+1)%n];
+  $('detail-in').innerHTML=`<div class="d-top"><a class="crumb" href="#projects">&larr; All projects</a>${isAdminSession()?`<button class="mini-btn" type="button" onclick="openAdmin(${i})">Edit this project</button>`:''}</div>
+  <div class="d-head"><h1>${esc(p.title)}</h1><div>${badge}<span class="tag">${esc(p.cat||'')}</span></div><p class="d-lead" style="margin-top:14px">${esc(p.desc)}</p></div>
+  <div class="d-grid"><div>${media}</div><div class="d-text">${paras}${feats.length?`<h2>Features</h2><ul class="feat">${feats.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`:''}<h2>Built with</h2><ul class="tags">${tags}</ul>${links?`<div class="hero-btns" style="margin-top:26px">${links}</div>`:''}</div></div>
+  ${n>1?`<div class="d-nav"><a href="#project/${esc(slug(prev.title))}">&larr; ${esc(prev.title)}</a><a href="#project/${esc(slug(next.title))}">${esc(next.title)} &rarr;</a></div>`:''}`;
+}
+function route(keep){
+  const h=location.hash;
+  if(h==='#admin')return;
+  const m=h.match(/^#project\/([^/]+)$/);
+  let i=-1;
+  if(m){try{i=data.projects.findIndex(p=>slug(p.title)===decodeURIComponent(m[1]))}catch(e){}}
+  if(i>=0){
+    inDetail=true;detailIdx=i;
+    document.body.classList.add('in-detail');
+    $('detail').hidden=false;
+    renderDetail(i);
+    document.title=`${data.projects[i].title} | ${fullName()}`;
+    if(keep!==true)scrollTo({top:0,behavior:'instant'});
+    return;
+  }
+  if(!inDetail)return;
+  inDetail=false;
+  document.body.classList.remove('in-detail');
+  $('detail').hidden=true;
+  document.title=`${fullName()} | ${data.title}`;
+  dispatchEvent(new Event('resize'));
+  const t=h.length>1?document.getElementById(h.slice(1)):null;
+  if(t)t.scrollIntoView({behavior:'instant'});else scrollTo({top:0,behavior:'instant'});
 }
 
 function linkOrText(label,value,link){
@@ -655,7 +736,7 @@ function tLine(html,cls){
 }
 
 const cmds={
-  help:()=>rows([['help','list commands'],['whoami','who this is'],['ls','list projects'],['about','short background'],['skills','skills by area'],['projects','what has been built'],['recent','newest projects'],['resources','open my resources folder'],['contact','how to reach me'],['theme','switch light or dark'],['clear','clear the screen']]),
+  help:()=>rows([['help','list commands'],['whoami','who this is'],['ls','list projects'],['about','short background'],['skills','skills by area'],['projects','what has been built'],['recent','newest projects'],['resources','open my resources folder'],['open name','open a project page, names from ls'],['contact','how to reach me'],['theme','switch light or dark'],['clear','clear the screen']]),
   whoami:()=>[`<span class="tk">${esc(slug(data.fname)||'user')}</span>`].concat(rows([['role',data.title],['school',data.school],['based',data.loc],['club',data.club],['track',data.track],['status',data.status]])),
   about:()=>[esc(data.about1),'',esc(data.about2)],
   skills:()=>{const g=[...skillGroups()];const w=Math.max(10,...g.map(x=>x[0].length+2));return g.map(([c,l])=>kv(c,l.join(', '),w))},
@@ -685,6 +766,7 @@ async function exec(raw){
   if(/^ls( projects\/?)?$/.test(key))out=projSlugs().map(esc);
   else if(key==='sudo hire-me')out=hire();
   else if(key==='open resources')out=cmds.resources();
+  else if(key.startsWith('open ')){const q=key.slice(5).trim();const p=data.projects.find(x=>slug(x.title)===q);if(p){location.hash='project/'+slug(p.title);out=[esc('Opening '+p.title+'...')]}else out=[esc('No such project: '+q+'. Try ls.')]}
   else if(key.startsWith('sudo'))out=[esc('visitor is not in the sudoers file. This incident will be reported.')];
   else if(Object.prototype.hasOwnProperty.call(cmds,key))out=cmds[key]();
   else out=[esc(`command not found: ${cmd}. Type help to see what works.`)];
@@ -908,7 +990,7 @@ async function sha(s){
   return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 }
 
-function openAdmin(){
+function openAdmin(focusIdx){
   const has=!!getHash();
   $('admin-overlay').classList.add('open');
   $('login-screen').hidden=false;
@@ -920,6 +1002,10 @@ function openAdmin(){
   $('login-btn').textContent=has?'Log in':'Set password';
   $('admin-pass').setAttribute('autocomplete',has?'current-password':'new-password');
   setTimeout(()=>$('admin-pass').focus(),0);
+  if(isAdminSession()&&getHash()){
+    unlock();
+    if(typeof focusIdx==='number')setTimeout(()=>{const el=$('pe-'+focusIdx);if(el)el.scrollIntoView({block:'start'})},0);
+  }
 }
 function closeAdmin(){
   $('admin-overlay').classList.remove('open');
@@ -940,6 +1026,7 @@ async function tryLogin(){
   else err('Wrong password.');
 }
 function unlock(){
+  try{sessionStorage.setItem('portfolio-admin','1')}catch(e){}
   draft=clone(data);
   $('login-screen').hidden=true;
   $('admin-panel').hidden=false;
@@ -961,7 +1048,7 @@ function skillsAdmin(){
 }
 function addSkill(){draft.skills.push({name:'New skill',cat:'Other'});skillsAdmin()}
 function projectsAdmin(){
-  $('admin-projects').innerHTML=draft.projects.map((p,i)=>`<div class="proj-edit">
+  $('admin-projects').innerHTML=draft.projects.map((p,i)=>`<div class="proj-edit" id="pe-${i}">
     <div class="full proj-edit-head"><strong>Project ${i+1}</strong><button type="button" class="mini-btn" onclick="draft.projects.splice(${i},1);projectsAdmin()">Remove</button></div>
     <input aria-label="Title" placeholder="Title" value="${esc(p.title)}" oninput="draft.projects[${i}].title=this.value"/>
     <select aria-label="Visual" onchange="draft.projects[${i}].visual=this.value">${VISUALS.map(v=>`<option value="${v[0]}"${p.visual===v[0]?' selected':''}>${v[1]}</option>`).join('')}</select>
@@ -972,10 +1059,41 @@ function projectsAdmin(){
     <select aria-label="Status" onchange="draft.projects[${i}].status=this.value">${['','New','In progress','Updated'].map(x=>`<option value="${x}"${(p.status||'')===x?' selected':''}>${x||'No badge'}</option>`).join('')}</select>
     <input aria-label="Live URL" placeholder="Live demo URL" value="${esc(p.live)}" oninput="draft.projects[${i}].live=this.value"/>
     <input aria-label="Code URL" placeholder="Source code URL" value="${esc(p.code)}" oninput="draft.projects[${i}].code=this.value"/>
+    <textarea class="full" rows="5" aria-label="Details" placeholder="Full details for the project page (blank line = new paragraph)" oninput="draft.projects[${i}].details=this.value">${esc(p.details||'')}</textarea>
+    <textarea class="full" rows="4" aria-label="Features" placeholder="Features, one per line" oninput="draft.projects[${i}].features=this.value">${esc(p.features||'')}</textarea>
+    ${photoEdit(i,p)}
   </div>`).join('');
 }
+function photoEdit(i,p){
+  const ph=p.photos||[];
+  return `<div class="full photo-edit"><div class="pl">${ph.map((u,j)=>`<div class="pi"><img src="${esc(u)}" alt=""/><button type="button" class="mini-btn" onclick="coverPhoto(${i},${j})">${j===0?'Cover':'Make cover'}</button><button type="button" class="mini-btn" onclick="removePhoto(${i},${j})">Remove</button></div>`).join('')}</div><div class="pu"><input type="file" accept="image/*" multiple aria-label="Upload photos" onchange="addPhotos(${i},this.files)"/><input type="text" id="pu-${i}" placeholder="or image path / URL, e.g. images/seat-hold.jpg"/><button type="button" class="mini-btn" onclick="addPhotoUrl(${i})">Add</button></div></div>`;
+}
+function shrink(file){
+  return new Promise((res,rej)=>{
+    const img=new Image(),u=URL.createObjectURL(file);
+    img.onload=()=>{const k=Math.min(1,1200/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',.78))};
+    img.onerror=()=>{URL.revokeObjectURL(u);rej(new Error('bad image'))};
+    img.src=u;
+  });
+}
+async function addPhotos(i,files){
+  const p=draft.projects[i];p.photos=p.photos||[];
+  for(const f of files){
+    if(!/^image\//.test(f.type))continue;
+    try{p.photos.push(await shrink(f))}catch(e){toast('Could not read '+f.name)}
+  }
+  projectsAdmin();
+}
+function addPhotoUrl(i){
+  const el=$('pu-'+i),v=el.value.trim();
+  if(!v)return;
+  const p=draft.projects[i];p.photos=p.photos||[];p.photos.push(v);
+  projectsAdmin();
+}
+function removePhoto(i,j){draft.projects[i].photos.splice(j,1);projectsAdmin()}
+function coverPhoto(i,j){const a=draft.projects[i].photos;a.unshift(a.splice(j,1)[0]);projectsAdmin()}
 function addProject(){
-  draft.projects.push({title:'New project',visual:'generic',emoji:'💡',desc:'Describe what it does.',tags:'',live:'',code:'',cat:'Web',status:'New'});
+  draft.projects.push({title:'New project',visual:'generic',emoji:'💡',desc:'Describe what it does.',tags:'',live:'',code:'',cat:'Web',status:'New',details:'',features:'',photos:[]});
   projectsAdmin();
 }
 async function saveAll(){
@@ -987,10 +1105,12 @@ async function saveAll(){
     setHash(await sha(np));
   }
   data=clone(draft);
-  persist();
+  const ok=persist();
   render();
+  if(inDetail&&data.projects[detailIdx])history.replaceState(null,'','#project/'+slug(data.projects[detailIdx].title));
+  route(true);
   closeAdmin();
-  toast('Saved in this browser. Use Copy JSON to publish the changes.');
+  toast(ok?'Saved in this browser. Use Download data.js to publish the changes.':'Shown now, but too big to keep in this browser. Use Download data.js to keep it.');
 }
 function downloadData(){
   readFields();
@@ -1009,6 +1129,7 @@ function resetAll(){
   try{localStorage.removeItem(STORE_KEY)}catch(e){}
   data=clone(DEFAULTS);
   render();
+  route(true);
   closeAdmin();
   toast('Restored the built-in content.');
 }
@@ -1019,12 +1140,13 @@ document.addEventListener('keydown',e=>{
   else if($('chat-window').classList.contains('open'))toggleChat(false);
 });
 $('admin-overlay').addEventListener('click',e=>{if(e.target===$('admin-overlay'))closeAdmin()});
-addEventListener('hashchange',()=>{if(location.hash==='#admin')openAdmin()});
+addEventListener('hashchange',()=>{if(location.hash==='#admin')openAdmin();else route()});
 
 (function(){const bar=$('progress');const upd=()=>{const h=document.documentElement.scrollHeight-innerHeight;bar.style.width=(h>0?scrollY/h*100:0)+'%'};addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd()})();
 setTheme(document.documentElement.dataset.theme||'dark');
 render();
 initChips();
+route();
 initMap();
 initTerminal();
 initNet();
